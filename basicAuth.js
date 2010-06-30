@@ -1,7 +1,5 @@
 var base64 = require("base64");
 
-var sys = require("sys");
-
 module.exports = function basicAuth(callback, realm) {
   realm = realm || "Authorization Required";
 
