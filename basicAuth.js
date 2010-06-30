@@ -4,6 +4,11 @@ var sys = require("sys");
 
 module.exports = function basicAuth(callback) {
   return function(req, res, next) {
+    res.unauthorized = function () {
+      this.writeHead(401);
+      this.end();
+    };
+
     var authorization = req.headers.authorization;
 
     if (authorization) {
@@ -17,16 +22,14 @@ module.exports = function basicAuth(callback) {
           req.headers["remote_user"] = credentials[0];
           next();
         } else {
-          res.writeHead(401);
-          res.end();
+          res.unauthorized();
         }
       } else {
         res.writeHead(400);
         res.end();
       }
     } else {
-      res.writeHead(401);
-      res.end();
+      res.unauthorized();
     }
   }
 }
