@@ -1,9 +1,10 @@
 var connect   = require("connect"),
-    basicAuth = require("basicAuth");
+    basicAuth = require("basicAuth"),
+    base64    = require("base64");
 
 var server = connect.createServer(
   basicAuth(function (user, password) {
-    user === "user" && password == "password"
+    return user === "user" && password == "password"
   }),
   function (req, res) {
     res.writeHead(200);
@@ -37,9 +38,11 @@ module.exports = {
   },
 
   "test not a basic request": function (assert) {
-    //assert.response(server,
-    //  {url: "/", headers: headers},
-    //  {status: 400}
-    //);
+    var headers = {authorization: "Foo " + base64.encode("user:password")};
+
+    assert.response(server,
+      {url: "/", headers: headers},
+      {status: 400}
+    );
   }
 }
