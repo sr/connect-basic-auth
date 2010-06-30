@@ -2,9 +2,11 @@ var base64 = require("base64");
 
 var sys = require("sys");
 
-module.exports = function basicAuth(callback) {
+module.exports = function basicAuth(callback, realm) {
+  realm = realm || "Authorization Required";
+
   function unauthorized(res) {
-    res.writeHead(401);
+    res.writeHead(401, {"WWW-Authenticate": 'Basic realm="' + realm + '"'});
     res.end();
   }
 

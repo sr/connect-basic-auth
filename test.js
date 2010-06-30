@@ -5,7 +5,7 @@ var connect   = require("connect"),
 var server = connect.createServer(
   basicAuth(function (user, password) {
     return user === "user" && password == "password"
-  }),
+  }, "baz"),
   function (req, res) {
     res.writeHead(200);
     res.close("welcome " + req.headers.remote_user);
@@ -30,14 +30,14 @@ module.exports = {
     var headers = {authorization: encode("foo", "bar")};
     assert.response(server,
       {url: "/", headers: headers},
-      {status: 401}
+      {status: 401, headers: {"WWW-Authenticate": 'Basic realm="baz"'}}
     );
   },
 
   "test missing Authorization": function (assert) {
     assert.response(server,
       {url: "/"},
-      {status: 401}
+      {status: 401, headers: {"WWW-Authenticate": 'Basic realm="baz"'}}
     );
   },
 
