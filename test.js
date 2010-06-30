@@ -26,7 +26,7 @@ module.exports = {
     var headers = {authorization: basicAuth.encode("foo", "bar")};
     assert.response(server,
       {url: "/", headers: headers},
-      {status: 402}
+      {status: 401}
     );
   },
 
