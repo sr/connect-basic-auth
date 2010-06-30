@@ -30,5 +30,5 @@ module.exports = function basicAuth(callback, realm) {
 
     unauthorized(res);
   }
-}
+};
 
