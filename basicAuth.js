@@ -14,7 +14,7 @@ module.exports = function basicAuth(callback) {
         var credentials = base64.decode(parts[1]).split(":");
 
         if (callback(credentials[0], credentials[1]) === true) {
-          req.headers["REMOTE_USER"] = credentials[0];
+          req.headers["remote_user"] = credentials[0];
           next();
         } else {
           res.writeHead(401);
