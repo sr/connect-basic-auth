@@ -26,9 +26,9 @@ module.exports = function basicAuth(callback) {
     if (callback(credentials[0], credentials[1]) === true) {
       req.headers["remote_user"] = credentials[0];
       next();
-    } else {
-      unauthorized(res);
     }
+
+    unauthorized(res);
   }
 }
 
