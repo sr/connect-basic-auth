@@ -9,7 +9,7 @@ var server = connect.createServer(
 
   function (req, res) {
     res.writeHead(200);
-    res.close("welcome " + req.headers.remote_user);
+    res.end("welcome " + req.headers.remote_user);
   }
 );
 
