@@ -32,6 +32,3 @@ module.exports = function basicAuth(callback) {
   }
 }
 
-module.exports.encode = function encode(user, password) {
-  return "Basic " + base64.encode(user + ":" + password);
-}

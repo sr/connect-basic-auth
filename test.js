@@ -12,9 +12,13 @@ var server = connect.createServer(
   }
 );
 
+function encode(user, password) {
+  return "Basic " + base64.encode(user + ":" + password);
+}
+
 module.exports = {
   "test valid credentials": function (assert) {
-    var headers = {authorization: basicAuth.encode("user", "password")};
+    var headers = {authorization: encode("user", "password")};
 
     assert.response(server,
       {url: "/", headers: headers},
@@ -23,7 +27,7 @@ module.exports = {
   },
 
   "test invalid credentials": function (assert) {
-    var headers = {authorization: basicAuth.encode("foo", "bar")};
+    var headers = {authorization: encode("foo", "bar")};
     assert.response(server,
       {url: "/", headers: headers},
       {status: 401}
@@ -38,7 +42,7 @@ module.exports = {
   },
 
   "test not a basic request": function (assert) {
-    var headers = {authorization: "Foo " + base64.encode("user:password")};
+    var headers = {authorization: "Foo bar"};
 
     assert.response(server,
       {url: "/", headers: headers},
