@@ -33,7 +33,7 @@ module.exports = {
   "test missing Authorization": function (assert) {
     assert.response(server,
       {url: "/"},
-      {status: 400}
+      {status: 401}
     );
   },
 

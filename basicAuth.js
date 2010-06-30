@@ -25,7 +25,7 @@ module.exports = function basicAuth(callback) {
         res.end();
       }
     } else {
-      res.writeHead(400);
+      res.writeHead(401);
       res.end();
     }
   }
