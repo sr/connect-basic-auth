@@ -14,21 +14,20 @@ module.exports = function basicAuth(callback) {
     if (!authorization)
       unauthorized(res);
 
-    var parts  = authorization.split(" ");
-    var scheme = parts[0];
+    var parts       = authorization.split(" ");
+    var scheme      = parts[0];
+    var credentials = base64.decode(parts[1]).split(":");
 
-    if (scheme === "Basic") {
-      var credentials = base64.decode(parts[1]).split(":");
-
-      if (callback(credentials[0], credentials[1]) === true) {
-        req.headers["remote_user"] = credentials[0];
-        next();
-      } else {
-        unauthorized(res);
-      }
-    } else {
+    if (scheme !== "Basic") {
       res.writeHead(400);
       res.end();
+    }
+
+    if (callback(credentials[0], credentials[1]) === true) {
+      req.headers["remote_user"] = credentials[0];
+      next();
+    } else {
+      unauthorized(res);
     }
   }
 }
