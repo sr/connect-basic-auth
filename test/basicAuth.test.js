@@ -8,8 +8,10 @@ var server = connect.createServer(
   }, "baz"),
 
   function (req, res) {
-    res.writeHead(200);
-    res.end("welcome " + req.headers.remote_user);
+    setTimeout(function () {
+      res.writeHead(200);
+      res.end("welcome " + req.headers.remote_user);
+    }, 100);
   }
 );
 
